@@ -21,14 +21,12 @@
 
     <!-- Load our React component. -->
     <script type="text/babel">
-        function HelloComponent({props}) {
+        function CheckInputText(props) {
 
-            const text = window.prompt("Enter your text!"); 
-
-            return (text.length <= 5) ? text : "Text too long"; 
+            return (props.text.length <= 5) ? <div>{props.text}</div> : <div>Text too long</div>; 
         }
 
-      ReactDOM.render(<HelloComponent/>, document.getElementById('root') ); 
+      ReactDOM.render(<CheckInputText text={window.prompt('Enter your text')}/>, document.getElementById('root') ); 
 
     </script>
 </body>
