@@ -21,24 +21,14 @@
 
     <!-- Load our React component. -->
     <script type="text/babel">
-        function HelloComponent({firstName, lastName}) {
-        return (
-            <React.Fragment>
-            <p>Front End Development - Assignment 3</p>
-            <div>Hello World! {firstName} {lastName}</div>
-            </React.Fragment>
-        );
-       
-      }
+        function HelloComponent({props}) {
 
-      ReactDOM.render(<HelloComponent firstName="Suraj" lastName="Mishra" />, document.getElementById('root') ); 
+            const text = window.prompt("Enter your text!"); 
 
-      /*
-      This is just my practice! 
-      let person = { firstName: 'Suraj', lastName: 'Mishra'};
-      let message = `Hello ${person.firstName} ${person.lastName}`; 
-      console.log(message); 
-      */
+            return (text.length <= 5) ? text : "Text too long"; 
+        }
+
+      ReactDOM.render(<HelloComponent/>, document.getElementById('root') ); 
 
     </script>
 </body>
