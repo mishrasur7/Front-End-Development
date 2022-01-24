@@ -28,10 +28,15 @@
                 setPersonDetails({...person, [event.target.name]: event.target.value})
             }; 
 
-            const text = () => (person.age) <= 18? "You are too young": `Hello ${person.yourName}`; 
+            const text = (event) => {
+                event.preventDefalut(); 
+                return (person.age) <= 18? "You are too young": `Hello ${person.yourName}`
+            
+            }; 
 
             return (
-                <div>
+                <form onSubmit={text}>
+                    <p className="message"></p>
                     <label>Name:</label>
                     <input 
                     value={person.firstName}
@@ -48,8 +53,8 @@
                     onChange={inputChanged}
                     />
                     <br />
-                    <button>Submit</button>
-                </div>
+                    <button onClick="message/text">Submit</button>
+                </form>
             ); 
 
         }
