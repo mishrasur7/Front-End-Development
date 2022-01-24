@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Front End Development / React</title>
+</head>
+
+<body>
+    <!-- We will put our React component inside this div. -->
+    <div id="root"></div>
+
+    <!-- Load React & Babel -->
+    <!-- Note: when deploying, replace "development.js" with "production.min.js". -->
+    <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6.26.0/babel.min.js"></script>
+
+    <!-- Load our React component. -->
+    <script type="text/babel">
+        function AgeInput() {
+            const[person, setPersonDetails] = React.useState({
+                yourName: '', 
+                age: ''
+            });
+
+            const inputChanged = (event) => {
+                setPersonDetails({...person, [event.target.name]: event.target.value})
+            }; 
+
+            const text = () => (person.age) <= 18? "You are too young": `Hello ${person.yourName}`; 
+
+            return (
+                <div>
+                    <label>Name:</label>
+                    <input 
+                    value={person.firstName}
+                    name="yourName"
+                    placeholder="Your name"
+                    onChange={inputChanged}
+                    />
+                    <br />
+                    <label>Age:</label>
+                    <input 
+                    value={person.age}
+                    name="age"
+                    placeholder="Your age"
+                    onChange={inputChanged}
+                    />
+                    <br />
+                    <button>Submit</button>
+                </div>
+            ); 
+
+        }
+
+        ReactDOM.render(<AgeInput />, document.getElementById("root")); 
+
+    </script>
+</body>
+
+</html>
