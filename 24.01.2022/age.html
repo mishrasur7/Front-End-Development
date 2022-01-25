@@ -24,19 +24,21 @@
                 age: ''
             });
 
-            const inputChanged = (event) => {
-                setPersonDetails({...person, [event.target.name]: event.target.value})
+            const inputChanged = (event) => { 
+                setPersonDetails({...person, [event.target.name]: event.target.value}); 
             }; 
 
-            const text = (event) => {
-                event.preventDefalut(); 
-                return (person.age) <= 18? "You are too young": `Hello ${person.yourName}`
+            const text = () => {
+               /*  if(person.age <= 18)
+                return alert("You are too young"); 
+                else 
+                return alert("Hello " + person.yourName); */  
+                return (person.age <= 18)? alert("You are too young"): alert(`Hello ${person.yourName}`); 
             
             }; 
 
             return (
-                <form onSubmit={text}>
-                    <p className="message"></p>
+                <div>
                     <label>Name:</label>
                     <input 
                     value={person.firstName}
@@ -53,8 +55,8 @@
                     onChange={inputChanged}
                     />
                     <br />
-                    <button onClick="message/text">Submit</button>
-                </form>
+                    <button onClick={text}>Submit</button>
+                </div>
             ); 
 
         }
