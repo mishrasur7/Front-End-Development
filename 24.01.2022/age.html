@@ -32,13 +32,17 @@
                /*  if(person.age <= 18)
                 return alert("You are too young"); 
                 else 
-                return alert("Hello " + person.yourName); */  
-                return (person.age <= 18)? alert("You are too young"): alert(`Hello ${person.yourName}`); 
+                return alert("Hello " + person.yourName); */ 
+                const message = document.getElementById("message"); 
+                 
+
+                return (person.age <= 18)? message.innerHTML = "You are too young": message.innerHTML = `Hello ${person.yourName}`; 
             
             }; 
 
             return (
                 <div>
+                    <p id="message"></p>
                     <label>Name:</label>
                     <input 
                     value={person.firstName}
