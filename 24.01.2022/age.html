@@ -29,15 +29,8 @@
             }; 
 
             const text = () => {
-               /*  if(person.age <= 18)
-                return alert("You are too young"); 
-                else 
-                return alert("Hello " + person.yourName); */ 
                 const message = document.getElementById("message"); 
-                 
-
                 return (person.age <= 18)? message.innerHTML = "You are too young": message.innerHTML = `Hello ${person.yourName}`; 
-            
             }; 
 
             return (
