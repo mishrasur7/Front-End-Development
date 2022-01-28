@@ -19,6 +19,10 @@
     <!-- Load our React component. -->
     <script type="text/babel">
         function AgeInput() {
+            //state for displaying message on the screen 
+            const [message, setMessage] = React.useState(''); 
+
+            //state for input values
             const[person, setPersonDetails] = React.useState({
                 yourName: '', 
                 age: ''
@@ -29,13 +33,13 @@
             }; 
 
             const text = () => {
-                const message = document.getElementById("message"); 
-                return (person.age <= 18)? message.innerHTML = "You are too young": message.innerHTML = `Hello ${person.yourName}`; 
+                (person.age <= 18)? setMessage("You are too young"): setMessage(`Hello ${person.yourName}`)
+               
             }; 
 
             return (
                 <div>
-                    <p id="message"></p>
+                    <p>{message}</p>
                     <label>Name:</label>
                     <input 
                     value={person.firstName}
