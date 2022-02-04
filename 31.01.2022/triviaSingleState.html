@@ -19,30 +19,31 @@
     <!-- Load our React component. -->
     <script type="text/babel">
         function TriviaAnswer() {
-            const[question, setQuestion] = React.useState('');
-            const[answer, setAnswer] = React.useState('');
-            const[condition, setCondition] = React.useState(false); 
+            const[game, setGame] = React.useState({
+                question: '', 
+                answer: '', 
+                condition: false
+            }); 
             
     
             const fetchData = () => {
                 fetch('https://opentdb.com/api.php?amount=1')
                 .then(response => response.json())
                 .then(responseData => {
-                    setCondition(false); 
-                    setQuestion(responseData.results[0].question);
-                    setAnswer(responseData.results[0].correct_answer);  
+                    setGame({...game, question: responseData.results[0].question, 
+                        answer: responseData.results[0].correct_answer, condition: false})  
                 })
             }
 
             const showAnswer = () => {
-                setCondition(true); 
+                setGame({...game, condition: true}); 
             }
 
-            if(!condition) {
+            if(!game.condition) {
 
             return (
                 <div>
-                    <p>Question: {question}</p>
+                    <p>Question: {game.question}</p>
                     <button onClick={fetchData}>New question</button>
                     <button onClick={showAnswer}>Show answer</button>
                     <p>Answer:</p>
@@ -53,10 +54,10 @@
 
             return (
                 <div>
-                    <p>Question: {question}</p>
+                    <p>Question: {game.question}</p>
                     <button onClick={fetchData}>New question</button>
                     <button onClick={showAnswer}>Show answer</button>
-                    <p>Answer: {answer}</p>
+                    <p>Answer: {game.answer}</p>
                 
                 </div>
             );
