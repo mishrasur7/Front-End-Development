@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Front End Development / React</title>
+</head>
+
+<body>
+    <!-- We will put our React component inside this div. -->
+    <div id="root"></div>
+
+    <!-- Load React & Babel -->
+    <!-- Note: when deploying, replace "development.js" with "production.min.js". -->
+    <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6.26.0/babel.min.js"></script>
+
+    <!-- Load our React component. -->
+    <script type="text/babel">
+        function Weather() {
+            const[weather, setWeather] = React.useState({
+                temperature: '', 
+                description: '', 
+                icon: ''
+            });
+
+            React.useEffect(() => {
+                fetch('https://api.openweathermap.org/data/2.5/weather?q=Espoo&appid=c7bec9969b729e66be708f9eaf62ba68')
+                .then(response => response.json())
+                .then(responseData => {
+                    setWeather({...weather, temperature: responseData.main.temp,
+                         description: responseData.weather[0].description})
+                    console.log(responseData); 
+                })
+            }, []); 
+
+            return (
+                <div>
+                    <p>Temperature: {weather.temperature}</p>
+                    <p>Weather:{weather.description} </p>
+                    <img src="" alt="" />
+                    
+                </div>
+            ); 
+       
+    }
+
+      ReactDOM.render(<Weather />, document.getElementById("root")); 
+
+    </script>
+</body>
+
+</html>
