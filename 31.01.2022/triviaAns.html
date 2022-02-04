@@ -32,6 +32,7 @@
                     setQuestion(responseData.results[0].question);
                     setAnswer(responseData.results[0].correct_answer);  
                 })
+                .catch(error => console.error)
             }
 
             const showAnswer = () => {

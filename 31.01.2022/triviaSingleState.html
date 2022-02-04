@@ -33,6 +33,7 @@
                     setGame({...game, question: responseData.results[0].question, 
                         answer: responseData.results[0].correct_answer, condition: false})  
                 })
+                .catch(error => console.error); 
             }
 
             const showAnswer = () => {
