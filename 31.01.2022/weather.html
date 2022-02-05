@@ -29,17 +29,17 @@
                 fetch('https://api.openweathermap.org/data/2.5/weather?q=Espoo&appid=c7bec9969b729e66be708f9eaf62ba68')
                 .then(response => response.json())
                 .then(responseData => {
-                    setWeather({...weather, temperature: responseData.main.temp,
-                         description: responseData.weather[0].description})
-                    console.log(responseData); 
-                })
+                    setWeather({...weather, temperature: Math.round(responseData.main.temp - 273.15),
+                        description: responseData.weather[0].description,
+                        icon: "http://openweathermap.org/img/wn/" + responseData.weather[0].icon + "@2x.png"})
+                    })
             }, []); 
 
             return (
                 <div>
-                    <p>Temperature: {weather.temperature}</p>
-                    <p>Weather:{weather.description} </p>
-                    <img src="" alt="" />
+                    <p>Temperature: {weather.temperature} Celsius</p>
+                    <p>Weather: {weather.description} </p>
+                    <img src={weather.icon} alt="weather icon"/>
                     
                 </div>
             ); 
