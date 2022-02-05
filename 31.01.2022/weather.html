@@ -26,13 +26,14 @@
             });
 
             React.useEffect(() => {
-                fetch('https://api.openweathermap.org/data/2.5/weather?q=Espoo&appid=c7bec9969b729e66be708f9eaf62ba68')
+                fetch('https://api.openweathermap.org/data/2.5/weather?q=Lapland&appid=c7bec9969b729e66be708f9eaf62ba68')
                 .then(response => response.json())
                 .then(responseData => {
-                    setWeather({...weather, temperature: Math.round(responseData.main.temp - 273.15),
+                    setWeather({...weather, temperature: (responseData.main.temp - 273.15).toFixed(2),
                         description: responseData.weather[0].description,
                         icon: "http://openweathermap.org/img/wn/" + responseData.weather[0].icon + "@2x.png"})
                     })
+                .catch(error => console.log(error)) 
             }, []); 
 
             return (
