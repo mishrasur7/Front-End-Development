@@ -18,41 +18,42 @@
 
   <!-- Load our React component. -->
   <script type="text/babel">
-    function Nasa() {
-      const[explanation, setExplanation] = React.useState(''); 
-      const[url, setUrl] = React.useState(''); 
-      const[mediaType, setMediaType] = React.useState('');
-      const[isReady, setReady] = React.useState(false); 
+    function ReactList() {
+      const[persons, setPersons] = React.useState([]); 
 
       React.useEffect(() => {
-        fetch('https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY')
+        fetch('https://reqres.in/api/users')
         .then(response => response.json())
-        .then(data => {
-          setExplanation(data.explanation); 
-          setUrl(data.url); 
-          setMediaType(data.media_type); 
-          setReady(true); 
-        })
-      }, []);
-      
-      if(!isReady) {
-        return <div>Loading...</div>; 
-      } else {
-        return(
-        <div>
-          <p>Explanation: {explanation}</p>
-          <img src={url}/>
-          </div>
-      ); 
+        .then(responseData => 
+        setPersons(responseData.data))
+        .catch(error => console.error(error)) 
+      }, []); 
 
-      }
-
+      return(
+      <div>
+        <h1>Persons</h1>
+        <table>
+          <tbody>
+            {
+              persons.map(person => 
+                <tr key={person.id}>
+                  <td>{person.first_name}</td>
+                  <td>{person.last_name}</td>
+                  <td>{person.email}</td>
+                  
+                </tr>
+              )
+            }
+          </tbody>
+        </table>
+      </div>
+    );
 
     }
 
+ 
     
-
-      ReactDOM.render(<Nasa />, document.getElementById("root")); 
+    ReactDOM.render(<ReactList />, document.getElementById("root")); 
 
     </script>
 </body>
