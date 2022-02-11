@@ -28,6 +28,7 @@
             .then(responseData => {
                 setRepositories(responseData.items)
             })
+            .catch(err => console.error(err))
         }
         , []); 
       
