@@ -1,7 +1,7 @@
 import React, { useState } from 'react'; 
 
 
-function Todolist() {
+function Todolistdelete() {
 
     const[todo, setTodo] = useState({
         description: '', 
@@ -11,17 +11,23 @@ function Todolist() {
     const[todos, setTodos] = useState([]); 
 
     const addTodo = () => {
-        setTodos([...todos, todo])
+        setTodos([todo, ...todos]);    
+        setTodo({description: '', date: ''})
+
     }
-   
 
     const inputChanged = (event) => {
         setTodo({...todo, [event.target.name]: event.target.value})
     }
 
+    const deleteToDo = (row) => {
+        setTodos(todos.filter((todo, i) => i !== row))
+    }
+
+
     return(
         <div>
-            <h1>Simple todo list</h1>
+            <h1>Simple todo list with delete functionality</h1>
             <input
             placeholder='Description'
             name='description'
@@ -37,18 +43,13 @@ function Todolist() {
              />
             <button onClick={addTodo}>Add</button>
             <table>
-                <thead>
-                    <tr>
-                        <td><b>Date</b></td>
-                        <td><b>Description</b></td>
-                    </tr>
-                </thead>
                 <tbody>
                     {
                         todos.map((todo, index) =>
                             <tr key={index}>
-                                <td>{todo.date}</td>
                                 <td>{todo.description}</td>
+                                <td>{todo.date}</td>
+                                <td><button onClick={() => deleteToDo(index)}>Delete</button></td>
                             </tr>  
                             )
                     }
@@ -58,4 +59,4 @@ function Todolist() {
     ); 
 }
 
-export default Todolist;
+export default Todolistdelete;
