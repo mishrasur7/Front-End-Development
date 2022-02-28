@@ -1,11 +1,13 @@
 import React, { useState } from 'react'; 
+import Todotable from './Todotable';
 
 
 function Todolist() {
 
     const[todo, setTodo] = useState({
         description: '', 
-        date: ''
+        date: '', 
+        priority: ''
     }); 
 
     const[todos, setTodos] = useState([]); 
@@ -17,6 +19,11 @@ function Todolist() {
 
     const inputChanged = (event) => {
         setTodo({...todo, [event.target.name]: event.target.value})
+    }
+
+
+    const deleteToDo = (row) => {
+        setTodos(todos.filter((todo, i) => i !== row))
     }
 
     return(
@@ -35,25 +42,15 @@ function Todolist() {
             value={todo.date}
             onChange={inputChanged}
              />
+             <input
+            placeholder='Priority'
+            name='priority'
+            value={todo.priority}
+            onChange={inputChanged}
+             />
             <button onClick={addTodo}>Add</button>
-            <table>
-                <thead>
-                    <tr>
-                        <td><b>Date</b></td>
-                        <td><b>Description</b></td>
-                    </tr>
-                </thead>
-                <tbody>
-                    {
-                        todos.map((todo, index) =>
-                            <tr key={index}>
-                                <td>{todo.date}</td>
-                                <td>{todo.description}</td>
-                            </tr>  
-                            )
-                    }
-                </tbody>
-            </table>
+            <Todotable todos ={todos} deleteTodo ={deleteToDo} />
+        
         </div>
     ); 
 }
