@@ -1,8 +1,22 @@
-import React, { useState } from 'react'; 
-import Todotable from './Todotable';
+import React, { useState, useRef } from 'react'; 
+
+import { AgGridReact } from 'ag-grid-react';
+
+import 'ag-grid-community/dist/styles/ag-grid.css';
+import 'ag-grid-community/dist/styles/ag-theme-material.css';
 
 
 function Todolist() {
+
+    const gridRef = useRef(); 
+
+    const columns = [
+        {field: 'description', sortable: true, filter: true}, 
+        {field: 'date', sortable: true, filter: true}, 
+        {field: 'priority', sortable: true, filter: true,
+            cellStyle: params => params.value === "High" ? {color: 'red'} : {color: 'black'}
+        }
+    ]
 
     const[todo, setTodo] = useState({
         description: '', 
@@ -22,8 +36,13 @@ function Todolist() {
     }
 
 
-    const deleteToDo = (row) => {
-        setTodos(todos.filter((todo, i) => i !== row))
+    const deleteToDo = () => {
+        if(gridRef.current.getSelectedNodes().length > 0) {
+            setTodos(todos.filter((todo, i) => i !== gridRef.current.getSelectedNodes()[0].childIndex))
+        } else {
+            alert("Select row first!")
+        }
+        
     }
 
     return(
@@ -49,7 +68,19 @@ function Todolist() {
             onChange={inputChanged}
              />
             <button onClick={addTodo}>Add</button>
-            <Todotable todos ={todos} deleteTodo ={deleteToDo} />
+            <button onClick={deleteToDo}>Delete</button>
+            <div className='ag-theme-material' style={{height: 400, width: 700, margin: 'auto'}}>
+            <AgGridReact
+                animateRows={true}
+                pagination={true}
+                ref={gridRef}
+                onGridReady={params => gridRef.current = params.api}
+                rowSelection="single"
+                rowData={todos}
+                columnDefs={columns}
+            />
+        </div>
+           
         
         </div>
     ); 
