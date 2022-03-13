@@ -71,8 +71,7 @@ function Todolist() {
             <button onClick={deleteToDo}>Delete</button>
             <div className='ag-theme-material' style={{height: 400, width: 700, margin: 'auto'}}>
             <AgGridReact
-                animateRows='true'
-                pagination={true}
+                animateRows="true"
                 ref={gridRef}
                 onGridReady={params => gridRef.current = params.api}
                 rowSelection="single"
