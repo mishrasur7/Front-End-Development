@@ -7,6 +7,15 @@ import 'ag-grid-community/dist/styles/ag-theme-material.css';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
+import DeleteIcon from '@mui/icons-material/Delete';
+
+import DateFnsUtils from '@date-io/date-fns';
+import {
+  DatePicker,
+  MuiPickersUtilsProvider,
+} from '@material-ui/pickers';
+
+import moment from 'moment';
 
 
 function Todolist() {
@@ -25,7 +34,10 @@ function Todolist() {
         description: '', 
         date: '', 
         priority: ''
-    }); 
+    });
+
+    const[date, setDate] = useState(null); 
+
 
     const[todos, setTodos] = useState([]); 
 
@@ -35,7 +47,14 @@ function Todolist() {
    
 
     const inputChanged = (event) => {
-        setTodo({...todo, [event.target.name]: event.target.value})
+        if(date != null) {
+            const dateString = moment(date).format("DD.MM.YYYY")
+            setTodo({...todo, date: dateString, [event.target.name]: event.target.value})
+        } else {
+            setTodo({...todo, [event.target.name]: event.target.value})
+        }
+        
+       
     }
 
 
@@ -47,6 +66,7 @@ function Todolist() {
         }
         
     }
+
 
     return(
         <div>
@@ -64,14 +84,15 @@ function Todolist() {
                     value={todo.description}
                     onChange={inputChanged} />
 
-                <TextField
-                    label='Date'
-                    variant='standard'
-                    name='date'
-                    // type="date"
-                    value={todo.date}
-                    onChange={inputChanged}
-                />
+                
+                <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                    <DatePicker
+                        label='Date'
+                        value={date} 
+                        onChange={date => setDate(date)} />
+                </MuiPickersUtilsProvider>
+
+
                 <TextField
                     label='Priority'
                     variant='standard'
@@ -81,15 +102,16 @@ function Todolist() {
                 />
                 <Button 
                     onClick={addTodo}
-                    variant="contained"
+                    variant="outlined"
                     color='success'
                     >
                     Add
                 </Button>
                 <Button 
                     onClick={deleteToDo}
-                    variant="contained"
+                    variant="outlined"
                     color='error'
+                    endIcon={<DeleteIcon />}
                     >
                     Delete
                 </Button>
