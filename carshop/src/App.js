@@ -1,23 +1,16 @@
-import logo from './logo.svg';
+import { AppBar, Toolbar, Typography } from '@mui/material';
 import './App.css';
+import Carlist from './components/Carlist';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <AppBar>
+        <Toolbar>
+          <Typography variant='h6'>My Carshop</Typography>
+        </Toolbar>
+      </AppBar>
+     <Carlist />
     </div>
   );
 }
