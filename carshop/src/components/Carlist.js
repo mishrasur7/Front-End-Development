@@ -8,6 +8,8 @@ import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Snackbar from '@mui/material/Snackbar';
 
+import Addcar from "./Addcar";
+
 function Carlist() {
 
     const[cars, setCars] = useState([]); 
@@ -58,7 +60,8 @@ function Carlist() {
     ])
     return (
         <React.Fragment>
-             <div className="ag-theme-material" style={{marginTop: 70, height: 600, width: '90%'}}>
+            <Addcar />
+             <div className="ag-theme-material" style={{ height: 600, width: '90%'}}>
                 <AgGridReact
                 columnDefs={columns}
                 rowData= {cars}
