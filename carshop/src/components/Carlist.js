@@ -3,14 +3,11 @@ import { AgGridReact } from 'ag-grid-react';
 
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-material.css';
-import { Delete } from "@mui/icons-material";
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Snackbar from '@mui/material/Snackbar';
-
 import Addcar from "./Addcar";
 import Editcar from "./Editcar";
-import { alertClasses } from "@mui/material";
 
 function Carlist() {
 
@@ -22,7 +19,7 @@ function Carlist() {
        , []);
 
     const fetchCars = () => {
-        fetch('https://carstockrest.herokuapp.com/cars')
+        fetch(process.env.REACT_APP_API_URL)
         .then(response => response.json())
         .then(data => setCars(data._embedded.cars))
         .catch(err => console.error(err))
@@ -44,7 +41,7 @@ function Carlist() {
     }
 
     const addCar = (newCar) => {
-        fetch('https://carstockrest.herokuapp.com/cars', {
+        fetch(process.env.REACT_APP_API_URL, {
             method:'POST', 
             headers: {'Content-Type': 'application/json'}, 
             body: JSON.stringify(newCar)
