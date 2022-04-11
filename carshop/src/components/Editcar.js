@@ -5,9 +5,11 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
+import IconButton from '@mui/material/IconButton';
+import EditIcon from '@mui/icons-material/Edit';
 
 
-function Addcar({ addCar }) {
+function Editcar({ params, updateCar }) {
 
   const [open, setOpen] = useState(false);
   const [car, setCar] = useState({
@@ -20,6 +22,14 @@ function Addcar({ addCar }) {
     }); 
 
   const handleClickOpen = () => {
+    setCar({
+        brand: params.data.brand,
+        model: params.data.model,
+        color: params.data.fuel, 
+        fuel: params.data.fuel,
+        year: params.data.year,
+        price: params.data.price 
+    })
     setOpen(true);
   };
 
@@ -28,15 +38,7 @@ function Addcar({ addCar }) {
   };
 
   const handleSave = () => {
-      addCar(car);
-      setCar({
-        brand: '',
-        model: '', 
-        color: '', 
-        fuel: '',
-        year: '',
-        price: ''       
-      })
+      updateCar(car, params.value); 
       setOpen(false); 
   }
 
@@ -47,9 +49,9 @@ function Addcar({ addCar }) {
 
   return (
     <div>
-      <Button variant="outlined" onClick={handleClickOpen} style={{marginTop:70}}>
-        Add new car
-      </Button>
+      <IconButton variant="outlined" onClick={handleClickOpen}>
+        <EditIcon color="success"/>
+      </IconButton>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>New car</DialogTitle>
         <DialogContent>
@@ -117,4 +119,4 @@ function Addcar({ addCar }) {
   );
 }
 
-export default Addcar; 
+export default Editcar; 

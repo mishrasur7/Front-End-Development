@@ -9,6 +9,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import Snackbar from '@mui/material/Snackbar';
 
 import Addcar from "./Addcar";
+import Editcar from "./Editcar";
+import { alertClasses } from "@mui/material";
 
 function Carlist() {
 
@@ -41,15 +43,55 @@ function Carlist() {
         }    
     }
 
+    const addCar = (newCar) => {
+        fetch('https://carstockrest.herokuapp.com/cars', {
+            method:'POST', 
+            headers: {'Content-Type': 'application/json'}, 
+            body: JSON.stringify(newCar)
+        })
+        .then(response => {
+            if(response.ok) {
+                fetchCars(); 
+            }
+            else {
+                alert('Something went wrong!'); 
+            }
+        })
+        .catch(err => console.error(err))
+    }
+
+    const updateCar = (updatedCar, link) => {
+        fetch(link, {
+            method: 'PUT', 
+            headers: { 'Content-Type': 'application/json'}, 
+            body: JSON.stringify(updatedCar)
+        })
+        .then(response => {
+            if(response.ok) {
+                fetchCars(); 
+            } else {
+                alert('Something went wrong'); 
+            }
+        })
+        .catch(err => console.error(err))
+
+    }
+
     const [columns] = useState([
         {field: 'brand', sortable : true, filter: true}, 
         {field: 'model', sortable : true, filter: true},
         {field: 'color', sortable : true, filter: true, width: 150}, 
         {field: 'fuel', sortable : true, filter: true, width: 120}, 
         {field: 'year', sortable : true, filter: true, width: 120}, 
-        {field: 'price', sortable : true, filter: true}, 
+        {field: 'price', sortable : true, filter: true},
+        {
+            headerName: '', 
+            width: 100, 
+            field: '_links.self.href', 
+            cellRenderer: params => <Editcar params={params} updateCar={updateCar}/>
+        },
         {   
-            width: 120,
+            width: 100,
             headerName: '',
             field: '_links.self.href',     
             cellRenderer: params => 
@@ -60,13 +102,14 @@ function Carlist() {
     ])
     return (
         <React.Fragment>
-            <Addcar />
+            <Addcar addCar={addCar}/>
              <div className="ag-theme-material" style={{ height: 600, width: '90%'}}>
                 <AgGridReact
                 columnDefs={columns}
                 rowData= {cars}
                 pagination={true}
                 paginationPageSize={10}
+                suppressCellFocus={true}
                 />
              </div>
              <Snackbar 
